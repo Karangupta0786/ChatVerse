@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/a"
+        android:title="Gender"
+        android:icon="@drawable/menu"/>
+    <item android:id="@+id/b"
+        android:icon="@drawable/menu"
+        android:title="Age Range"/>
+    <item android:id="@+id/c"
+        android:icon="@drawable/menu"
+        android:title="age"/>
+
+
+
+
+</menu>

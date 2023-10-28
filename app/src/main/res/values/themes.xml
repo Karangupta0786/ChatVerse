@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ChatVerse" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:layoutDirection">ltr</item>
+    </style>
+
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Other theme attributes -->
+    </style>
+
+    <!-- Style for circular ShapeableImageView -->
+    <style name="circularImageViewShape1">
+        <item name="cornerSize">50%</item>
+    </style>
+
+
+
+    <style name="Theme.ChatVerse" parent="Base.Theme.ChatVerse" />
+</resources>

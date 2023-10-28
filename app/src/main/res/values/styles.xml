@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- OnBoarding Text Input Layout Theme-->
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeWidth">5dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="strokeWidth">0.5dp</item>
+        <item name="android:background">@color/light_black</item>
+        <item name="background">@color/white</item>
+        <item name="android:layout_margin">9dp</item>
+
+    </style>
+</resources>
