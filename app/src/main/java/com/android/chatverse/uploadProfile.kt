@@ -1,12 +1,9 @@
 package com.android.chatverse
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.net.Uri
@@ -15,18 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.android.chatverse.databinding.ActivityUploadProfileBinding
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -220,7 +212,7 @@ class uploadProfile : AppCompatActivity() {
 // Create a MultipartBody.Part from the RequestBody
         val profilePicPart = MultipartBody.Part.createFormData("profilePic", imageFile.name, imageRequestBody)
 
-        val send = retrofitObject.retroit.updateProfile(
+        val send = RetrofitObject.retroit.updateProfile(
             userId,name,age,gender,profilePicPart
         )
 

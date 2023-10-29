@@ -13,7 +13,10 @@ class SplashScreen : AppCompatActivity() {
 
         Handler().postDelayed(Runnable {
             if (SharedPreferencesUtil(applicationContext).getFlagValue()){
+                MesiboApi.init(applicationContext)
+                MesiboApi.startMesibo(true)
                 startActivity(Intent(this@SplashScreen,DashboardScreen::class.java))
+
             }
             else{
                 val next = Intent(this@SplashScreen,MainActivity::class.java)

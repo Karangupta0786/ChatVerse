@@ -24,6 +24,11 @@
             android:name=".EditProfile"
             android:exported="false" />
         <activity
+            android:name=".MessagingModule.MesiboMessagingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".DashboardScreen"
             android:exported="false" />
         <activity

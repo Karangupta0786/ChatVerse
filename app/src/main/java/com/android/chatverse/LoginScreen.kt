@@ -3,8 +3,6 @@ package com.android.chatverse
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import com.android.chatverse.databinding.ActivityLoginScreenBinding
@@ -53,7 +51,7 @@ class LoginScreen : AppCompatActivity() {
 //        else{
 //            Toast.makeText(applicationContext, "inCorrect details", Toast.LENGTH_SHORT).show()
 //        }
-        val apiClient = retrofitObject.retroit
+        val apiClient = RetrofitObject.retroit
         val loginRequest = LoginRequest( Email, password)
         val call = apiClient.login(loginRequest)
 
@@ -74,6 +72,9 @@ class LoginScreen : AppCompatActivity() {
                     SharedPreferencesUtil(applicationContext).saveData(response?.mesiboDetails?.uid.toString(),response?.mesiboDetails?.token.toString(),response?.mesiboDetails?.address.toString(),response?.userId.toString())
 
                     SharedPreferencesUtil(applicationContext).saveFlagValue(true)
+
+                    MesiboApi.init(applicationContext)
+                    MesiboApi.startMesibo(true)
 
                     startActivity(Intent(this@LoginScreen,uploadProfile::class.java))
                 } else {

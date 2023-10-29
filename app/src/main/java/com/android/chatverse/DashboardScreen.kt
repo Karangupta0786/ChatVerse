@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.android.chatverse.MessagingModule.UserListFragment
 import com.android.chatverse.databinding.ActivityDashboardScreenBinding
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 
@@ -68,8 +69,8 @@ class DashboardScreen : AppCompatActivity(),OnNavigationItemSelectedListener {
             val toastMessage = "UID: $uid\nAddress: $address\nToken: $token"
             Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
 
-            binding.imgNav.setOnClickListener {
-            }
+//            binding.imgNav.setOnClickListener {
+//            }
 
 
             val fragmentManager = supportFragmentManager
@@ -79,6 +80,12 @@ class DashboardScreen : AppCompatActivity(),OnNavigationItemSelectedListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
 
         }
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frameLayout,UserListFragment())
+        fragmentTransaction.commit()
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
 }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         

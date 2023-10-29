@@ -23,10 +23,7 @@ class EditprofileFragment : Fragment() {
     private val TAKE_PICTURE = 2
     private val CAMERA_PERMISSION_CODE = 101
 
-
-
     lateinit var binding:FragmentEditprofileBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

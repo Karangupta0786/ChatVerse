@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getSignup() {
-        val apiClient = retrofitObject.retroit
+        val apiClient = RetrofitObject.retroit
         val signUpRequest = SignUpData("$email","$password")
         val call = apiClient.signup(signUpRequest)
         call.enqueue(object : Callback<signUpResponse?> {

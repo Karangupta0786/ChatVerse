@@ -5,6 +5,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -28,4 +29,5 @@ interface ApiInterface {
         @Part("gender") gender: RequestBody,
         @Part profilePic: MultipartBody.Part
     ): Call<LoginResponse>
+
 }

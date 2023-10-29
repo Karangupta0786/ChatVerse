@@ -1,7 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
 }
+
+
 
 android {
     namespace = "com.android.chatverse"
@@ -53,5 +56,11 @@ dependencies {
     //retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+
+    //Mesibo dependencies
+    implementation ("com.mesibo.api:mesibo:2.1.4")
+    implementation ("com.mesibo.api:calls:2.1.4")
+    implementation ("com.mesibo.api:ui:2.1.4")
 
 }
