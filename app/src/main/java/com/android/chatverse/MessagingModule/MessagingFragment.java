@@ -169,7 +169,7 @@ public class MessagingFragment extends BaseFragment implements MessageListener, 
     private HashMap<Long, MessageData> mMessageMap = new HashMap();
     private WeakReference<MesiboMessagingFragment.FragmentListener> mListener = null;
     private String mName = null;
-    private CardView videoCard;
+//    private CardView videoCard;
     private String mPeer = null;
     private long mGroupId = 0L;
     private long mForwardId = 0L;
@@ -346,7 +346,7 @@ public class MessagingFragment extends BaseFragment implements MessageListener, 
                     this.ib_cam = (ImageButton) view.findViewById(R.id.cameraButton);
                     this.ib_cam.setOnClickListener(this);
                     this.attachCard = view.findViewById(R.id.attach_card);
-                    this.videoCard = view.findViewById(R.id.video_card);
+//                    this.videoCard = view.findViewById(R.id.video_card);
 //                    this.ib_voice = (ImageButton) view.findViewById(R.id.voicenotes);
 //                    this.ib_voice.setOnClickListener(this);
 //                    this.showMessage = (LinearLayout) view.findViewById(R.id.messageLayout);
@@ -384,8 +384,8 @@ public class MessagingFragment extends BaseFragment implements MessageListener, 
                     CardView camera = view.findViewById(R.id.camera_card);
                     CardView gallery = view.findViewById(R.id.gallery_card);
                     CardView document = view.findViewById(R.id.document_card);
-                    CardView audio = view.findViewById(R.id.audio_card);
-                    CardView location = view.findViewById(R.id.location_card);
+//                    CardView audio = view.findViewById(R.id.audio_card);
+//                    CardView location = view.findViewById(R.id.location_card);
 
                     camera.setOnClickListener(new OnClickListener() {
                         @Override
@@ -430,66 +430,66 @@ public class MessagingFragment extends BaseFragment implements MessageListener, 
                         }
                     });
 
-                    audio.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Animation slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_to_top_exit);
-                            attachCard.startAnimation(slideDown);
-                            attachCard.setVisibility(View.GONE);
-                            isOpen[0] = false;
-                            List<String> permissions = new ArrayList();
-                            if (Utils.aquireUserPermissions(requireContext(), permissions, 101)) {
-                                MediaPicker.launchPicker(getActivity(), MediaPicker.TYPE_AUDIO);
-                            }
-                        }
-                    });
+//                    audio.setOnClickListener(new OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Animation slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_to_top_exit);
+//                            attachCard.startAnimation(slideDown);
+//                            attachCard.setVisibility(View.GONE);
+//                            isOpen[0] = false;
+//                            List<String> permissions = new ArrayList();
+//                            if (Utils.aquireUserPermissions(requireContext(), permissions, 101)) {
+//                                MediaPicker.launchPicker(getActivity(), MediaPicker.TYPE_AUDIO);
+//                            }
+//                        }
+//                    });
 
-                    videoCard.setOnClickListener(new OnClickListener(){
-                        @Override
-                        public void onClick(View view) {
-                            Animation slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_to_top_exit);
-                            attachCard.startAnimation(slideDown);
-                            attachCard.setVisibility(View.GONE);
-                            isOpen[0] = false;
-                            CharSequence[] Options = new CharSequence[]{MesiboUI.getConfig().videoFromRecorderTitle, MesiboUI.getConfig().videoFromGalleryTitle};
-                            AlertDialog.Builder builder = new AlertDialog.Builder(myActivity());
-                            builder.setTitle(MesiboUI.getConfig().videoSelectTitle);
-                            builder.setItems(Options, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (which == 0) {
-                                        MediaPicker.launchPicker(MessagingFragment.this.myActivity(), MediaPicker.TYPE_CAMERAVIDEO, Mesibo.getTempFilesPath());
-                                    } else if (which == 1) {
-                                        MediaPicker.launchPicker(MessagingFragment.this.myActivity(), MediaPicker.TYPE_FILEVIDEO);
-                                    }
+//                    videoCard.setOnClickListener(new OnClickListener(){
+//                        @Override
+//                        public void onClick(View view) {
+//                            Animation slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_to_top_exit);
+//                            attachCard.startAnimation(slideDown);
+//                            attachCard.setVisibility(View.GONE);
+//                            isOpen[0] = false;
+//                            CharSequence[] Options = new CharSequence[]{MesiboUI.getConfig().videoFromRecorderTitle, MesiboUI.getConfig().videoFromGalleryTitle};
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(myActivity());
+//                            builder.setTitle(MesiboUI.getConfig().videoSelectTitle);
+//                            builder.setItems(Options, new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    if (which == 0) {
+//                                        MediaPicker.launchPicker(MessagingFragment.this.myActivity(), MediaPicker.TYPE_CAMERAVIDEO, Mesibo.getTempFilesPath());
+//                                    } else if (which == 1) {
+//                                        MediaPicker.launchPicker(MessagingFragment.this.myActivity(), MediaPicker.TYPE_FILEVIDEO);
+//                                    }
+//
+//                                }
+//                            });
+//                            builder.show();
+//                        }
+//                    });
 
-                                }
-                            });
-                            builder.show();
-                        }
-                    });
-
-                    location.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Animation slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_to_top_exit);
-                            attachCard.startAnimation(slideDown);
-                            attachCard.setVisibility(View.GONE);
-                            isOpen[0] = false;
-                            List<String> permissions = new ArrayList();
-                            permissions.add("android.permission.ACCESS_FINE_LOCATION");
-                            if (Utils.aquireUserPermissions(requireContext(), permissions, 101)) {
-                                try {
-                                    displayPlacePicker();
-                                } catch (GooglePlayServicesNotAvailableException var4) {
-                                    var4.printStackTrace();
-                                } catch (GooglePlayServicesRepairableException var5) {
-                                    var5.printStackTrace();
-                                }
-                            }
-                        }
-
-
-                    });
+//                    location.setOnClickListener(new OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Animation slideDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_to_top_exit);
+//                            attachCard.startAnimation(slideDown);
+//                            attachCard.setVisibility(View.GONE);
+//                            isOpen[0] = false;
+//                            List<String> permissions = new ArrayList();
+//                            permissions.add("android.permission.ACCESS_FINE_LOCATION");
+//                            if (Utils.aquireUserPermissions(requireContext(), permissions, 101)) {
+//                                try {
+//                                    displayPlacePicker();
+//                                } catch (GooglePlayServicesNotAvailableException var4) {
+//                                    var4.printStackTrace();
+//                                } catch (GooglePlayServicesRepairableException var5) {
+//                                    var5.printStackTrace();
+//                                }
+//                            }
+//                        }
+//
+//
+//                    });
 
                     // Use an array to track the open/close state
 

@@ -3,8 +3,7 @@ package com.android.chatverse
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.Intent.ACTION_PICK
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -12,91 +11,115 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import com.android.chatverse.databinding.ActivityUploadProfileBinding
-import com.google.android.material.textfield.TextInputEditText
+import com.android.chatverse.DataClasses.UserProfile
+import com.android.chatverse.databinding.ActivityEditprofileBinding
+import com.bumptech.glide.Glide
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Multipart
 import java.io.File
 
-class uploadProfile : AppCompatActivity() {
-    lateinit var binding:ActivityUploadProfileBinding
+class EditProfileActivity : AppCompatActivity() {
+
     private val PICK_IMAGE_FROM_GALLERY = 1
     private val TAKE_PICTURE = 2
     private val CAMERA_PERMISSION_CODE = 101
+
     private var selectedImageUri = ""
-    lateinit var imageView: ImageView
-    lateinit var editImage:ImageView
     lateinit var userName:String
     lateinit var userAge:String
     lateinit var imgUri: Uri
-    lateinit var maleButton: RadioButton
-    lateinit var femaleButton: RadioButton
-    private var gender = "female"
-    private val lookingFor = "F"
-//    private val contract = registerForActivityResult(ActivityResultContracts.GetContent()){
-////        imgUri = null!!
-//        imageView.setImageURI(null)
-//        imageView.setImageURI(it)
-//    }
+    lateinit var gender:String
+    private var lookingFor = "F"
+    var x = true
+
+    lateinit var binding:ActivityEditprofileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upload_profile)
-        imageView = findViewById(R.id.img_upload)
-        editImage = findViewById(R.id.edt_img)
-    maleButton = findViewById(R.id.maleButton)
-    femaleButton = findViewById(R.id.femaleButton)
-
-    maleButton.setOnClickListener {
-        maleButton.isChecked = true
-        gender = "male"
-        femaleButton.isChecked = false
-    }
-    femaleButton.setOnClickListener {
-        femaleButton.isChecked = true
-        maleButton.isChecked = false
-        gender = "female"
-    }
-
-    userName = findViewById<TextInputEditText>(R.id.user_name).text.toString()
-    userAge = findViewById<TextInputEditText>(R.id.user_age).text.toString()
+        binding = ActivityEditprofileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        editImage.setOnClickListener {
+
+        binding.imgBoy.setOnClickListener {
+            gender = "Male"
+            binding.imgBoy.strokeWidth = 5
+            binding.imgGirl.strokeWidth = 0
+        }
+        binding.imgGirl.setOnClickListener {
+            gender = "Female"
+            binding.imgBoy.strokeWidth = 0
+            binding.imgGirl.strokeWidth = 5
+        }
+        loadUserProfile()
+//        if (SharedPreferencesUtil(applicationContext).getFlagValue()){
+//        }
+
+        Toast.makeText(applicationContext, SharedPreferencesUtil(applicationContext).retrieveData().second.second, Toast.LENGTH_SHORT).show()
+
+        // Set a click listener for your ImageView or any other view you want to use to trigger image selection
+        binding.editImg.setOnClickListener {
             checkPermissionAndShowDialog()
         }
-
-        findViewById<CardView>(R.id.btn_submit).setOnClickListener {
-            val sharedPreferences = getSharedPreferences("login", MODE_PRIVATE)
+        binding.btnSubmit.setOnClickListener {
+            userName = binding.etName.text.toString()
+            userAge = binding.etAge.text.toString()
 
             setUpProfile()
-
-            Toast.makeText(applicationContext, "$gender", Toast.LENGTH_SHORT).show()
-
-//            startActivity(Intent(this@uploadProfile,DashboardScreen::class.java))
         }
-    }
-//    private fun createUri(): Uri? {
-//        val image = File(applicationContext.filesDir,"camera_photo.png")
-//        return FileProvider.getUriForFile(applicationContext,"com.android.chatverse.fileProvider",image)
-//    }
 
-//    private fun setUpProfile(){
-//    }
+    }
+        private fun loadUserProfile() {
+        val userId = SharedPreferencesUtil(applicationContext).retrieveData().first
+
+        val call = RetrofitObject.retroit.getUserProfile(userId)
+        call.enqueue(object : Callback<UserProfile> {
+            override fun onResponse(call: Call<UserProfile>, response: Response<UserProfile>) {
+                if (response.isSuccessful) {
+                    val userProfile = response.body()
+
+//                    Toast.makeText(applicationContext, "load user profile", Toast.LENGTH_SHORT).show()
+
+                    binding.etName.setText(userProfile?.name.toString())
+                    binding.etAge.setText(userProfile?.age)
+//                    Toast.makeText(applicationContext, "${userProfile?.gender.toString()}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(applicationContext, userProfile?.lookingForGender.toString(), Toast.LENGTH_SHORT).show()
+                    if ( userProfile?.gender == "Female"){
+                        binding.imgBoy.strokeWidth = 0
+                        binding.imgGirl.strokeWidth = 5
+                    }
+                    else{
+                        binding.imgBoy.strokeWidth = 5
+                        binding.imgGirl.strokeWidth = 0
+                    }
+
+                    Glide.with(this@EditProfileActivity)
+                        .load(userProfile?.profilePic)
+                        .into(binding.imgUser)
+                }
+                else{
+                    Log.e("response",response.message().toString())
+                    Log.e("response", "Error Code: ${response.code()}, Message: ${response.message()}")
+                    Toast.makeText(applicationContext, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UserProfile>, t: Throwable) {
+                Log.e("failure",t.localizedMessage.toString())
+            }
+        })
+    }
+
     private fun checkPermissionAndShowDialog() {
         if (ContextCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.CAMERA
-            ) == PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             // Camera permission is granted, show the image picker dialog
             showImagePickerDialog()
@@ -123,7 +146,7 @@ class uploadProfile : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             CAMERA_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] ==  PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Camera permission granted, show the image picker dialog
                     showImagePickerDialog()
                 } else {
@@ -144,14 +167,14 @@ class uploadProfile : AppCompatActivity() {
         // For simplicity, let's use a simple dialog with two options
         val options = arrayOf("Gallery", "Camera")
 
-        AlertDialog.Builder(this@uploadProfile)
+        AlertDialog.Builder(this@EditProfileActivity)
             .setTitle("Choose an option")
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> {
                         val galleryIntent =
                             Intent(
-                               ACTION_PICK,
+                                Intent.ACTION_PICK,
                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                             )
                         startActivityForResult(galleryIntent, PICK_IMAGE_FROM_GALLERY)
@@ -177,26 +200,24 @@ class uploadProfile : AppCompatActivity() {
                 PICK_IMAGE_FROM_GALLERY -> {
                     // User selected an image from the gallery
                     imgUri = data?.data!!
-                     selectedImageUri = data?.data.toString()
+                    selectedImageUri = data?.data.toString()
                     val x = SharedPreferencesUtil(applicationContext)
                     x.saveURI(selectedImageUri.toString())
                     // Handle the selected image URI, for example, load it into an ImageView
-                    imageView.setImageURI(Uri.parse(selectedImageUri))
+                    binding.imgUser.setImageURI(Uri.parse(selectedImageUri))
 
                 }
                 TAKE_PICTURE -> {
                     // User took a picture using the camera
                     val imageBitmap = data?.extras?.get("data") as Bitmap
                     // Handle the captured image, for example, load it into an ImageView
-                    imageView.setImageBitmap(imageBitmap)
+                    binding.imgUser.setImageBitmap(imageBitmap)
                 }
             }
         }
     }
 
     private fun setUpProfile(){
-
-
 
         val data = SharedPreferencesUtil(applicationContext).retrieveData()
         val userId = data.first
@@ -218,7 +239,6 @@ class uploadProfile : AppCompatActivity() {
         val send = RetrofitObject.retroit.updateProfile(
             name,profilePicPart,age,gender,lookingFor,userId
         )
-
         send.enqueue(object : Callback<LoginResponse?> {
             override fun onResponse(
                 call: Call<LoginResponse?>,
@@ -227,7 +247,8 @@ class uploadProfile : AppCompatActivity() {
                 if (response.isSuccessful){
                     val response = response.body()!!
                     Toast.makeText(applicationContext,response.message.toString(),Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this@uploadProfile,DashboardScreen::class.java))
+                    Toast.makeText(applicationContext, "set up profile", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@EditProfileActivity,DashboardScreen::class.java))
                     finish()
                 }else{
                     Log.e("error",response.code().toString())
@@ -248,6 +269,5 @@ class uploadProfile : AppCompatActivity() {
         cursor?.close()
         return filePath
     }
-
 
 }

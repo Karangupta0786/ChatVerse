@@ -52,6 +52,7 @@ import com.android.chatverse.OnlineStatusImageView;
 import com.android.chatverse.R;
 import com.android.chatverse.RandomUserResponse;
 import com.android.chatverse.RetrofitObject;
+import com.android.chatverse.SharedPreferencesUtil;
 import com.android.chatverse.SwipeActionListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -263,8 +264,8 @@ public class UserListFragment extends Fragment implements Mesibo.MessageListener
 //        this.searchEmpty = view.findViewById(R.id.searchEmpty);
 //        setEmptyViewText();
 //
-//        this.appBarLayout = getActivity().findViewById(com.mesibo.messaging.R.id.appBarLayout);
-//        appBarLayout.setVisibility(View.VISIBLE);
+        this.appBarLayout = getActivity().findViewById(R.id.appBarLayout);
+        appBarLayout.setVisibility(View.VISIBLE);
         this.topLayout = view.findViewById(R.id.top_Layout);
         this.deleteIcon = view.findViewById(R.id.delete_icon);
         this.backButton = view.findViewById(R.id.back_btn);
@@ -356,8 +357,10 @@ public class UserListFragment extends Fragment implements Mesibo.MessageListener
     }
 
     public void enqueueRandomSearch(String gender) {
+        SharedPreferencesUtil sharedPreferencesUtil = new  SharedPreferencesUtil(requireContext());
+        String userId = sharedPreferencesUtil.retrieveData().getFirst();
         ApiService apiService = RetrofitObject.INSTANCE.getRetroit2();
-        Call<RandomUserResponse> call = apiService.randomSearch(gender);
+        Call<RandomUserResponse> call = apiService.randomSearch(gender,userId);
 
         call.enqueue(new Callback<RandomUserResponse>() {
             @Override

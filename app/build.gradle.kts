@@ -62,5 +62,8 @@ dependencies {
     implementation ("com.mesibo.api:mesibo:2.1.4")
     implementation ("com.mesibo.api:calls:2.1.4")
     implementation ("com.mesibo.api:ui:2.1.4")
+//    mcv
+    implementation ("com.google.android.material:material:1.4.0")
+
 
 }

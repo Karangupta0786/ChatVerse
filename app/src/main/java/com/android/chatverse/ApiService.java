@@ -5,6 +5,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface ApiService {
-    @GET("random/{gender}")
-    Call<RandomUserResponse> randomSearch(@Path("gender") String gender);
+    @GET("random/{gender}/{userId}")
+    Call<RandomUserResponse> randomSearch(@Path("gender") String gender,@Path("userId")String userId);
 }

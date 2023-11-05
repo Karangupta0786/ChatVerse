@@ -111,6 +111,8 @@ public class MessageAdapter extends SelectableAdapter<RecyclerView.ViewHolder> {
         this.mcellHeight = 0;
     }
 
+    //Continue here:-
+
     public int getItemViewType(int position) {
         MesiboRecycleViewHolder.Listener l;
         int viewType;

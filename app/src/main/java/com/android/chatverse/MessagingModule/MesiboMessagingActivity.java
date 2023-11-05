@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -30,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.android.chatverse.R;
 import com.mesibo.api.Mesibo;
@@ -93,6 +95,13 @@ public class MesiboMessagingActivity extends AppCompatActivity implements Mesibo
     public void onCreate(Bundle savedInstanceState) {
         MesiboMessagingActivity.super.onCreate(savedInstanceState);
         Bundle args = getIntent().getExtras();
+
+        // Inside MesiboMessagingActivity onCreate or appropriate lifecycle method
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getStatusBarColor();
+        }
+
 
 
         // Initializing Mesibo

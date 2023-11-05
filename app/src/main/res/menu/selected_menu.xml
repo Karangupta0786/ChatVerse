@@ -12,6 +12,7 @@
         android:orderInCategory="0"
         android:iconTint="@color/text_color17"
         app:showAsAction="always"
+        android:visible="false"
         android:title="Reply" />
 
 <!--    <item-->
@@ -41,6 +42,7 @@
         android:id="@+id/menu_copy"
         android:icon="@drawable/ico_copy"
         android:orderInCategory="0"
+
         app:showAsAction="always"
         android:iconTint="@color/text_color17"
         android:title="Copy" />

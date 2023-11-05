@@ -71,6 +71,7 @@
             android:hint="your name">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -106,10 +107,11 @@
             android:hint="your age">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_age"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:inputType="text"
+                android:inputType="number"
                 android:textColor="@color/white"
                 android:textColorHint="@color/grey"
                 android:textSize="13sp" />
@@ -193,6 +195,25 @@
             app:layout_constraintTop_toBottomOf="@id/txt_girl"
             app:layout_constraintBottom_toBottomOf="@id/img_girl"
             android:src="@drawable/women"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="29dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="#05A5C9">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_margin="9dp"/>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
